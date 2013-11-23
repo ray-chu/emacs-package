@@ -40,7 +40,7 @@ will be handled.
 Do not try to modify this list for end user customizations; the
 `*-font-lock-extra-types' variable, where `*' is the mode prefix, is
 the appropriate place for that."
-  cuda:
+  cuda
   (append 
    '("dim3" 
       "char1" "uchar1" "char2" "uchar2" "char3" "uchar3" "char4" "uchar4"
@@ -60,7 +60,7 @@ the appropriate place for that."
 but they don't build a type of themselves.  Unlike the keywords on
 `c-primitive-type-kwds', they are fontified with the keyword face and
 not the type face."
-  cuda:
+  cuda
     (append 
       '("__device__" "__global__" "__shared__" "__host__" "__constant__") 
       (c-lang-const c-type-modifier-keywds) 
@@ -77,7 +77,7 @@ operators."
 
 (c-lang-defconst c-primary-expr-kwds
   "Keywords besides constants and operators that start primary expressions."
-  cuda:  '("gridDim" "blockIdx" "blockDim" "threadIdx" "warpSize"))
+  cuda: '("gridDim" "blockIdx" "blockDim" "threadIdx" "warpSize"))
 
 (c-lang-defconst c-paren-nontype-kwds
   "Keywords that may be followed by a parenthesis expression that doesn't
@@ -136,6 +136,29 @@ Each list item should be a regexp matching a single identifier.")
           ;; irrelevant menu alternatives.
           (cons "CUDA" (c-lang-const c-mode-menu cuda)))
 
+
+;; (setq cuda-types '("dim3" 
+;;       "char1" "uchar1" "char2" "uchar2" "char3" "uchar3" "char4" "uchar4"
+;;        "short1" "ushort1" "short2" "ushort2" "short3" "ushort3" "short4" "ushort4"
+;;         "int1" "uint1" "int2" "uint2" "int3" "uint3" "int4" "uint4"
+;; 	 "long1" "ulong1" "long2" "ulong2" "long3" "ulong3" "long4" "ulong4"
+;; 	  "float1" "float2"  "float3" "float4" 
+;; 	   "double1" "double2" ))
+
+;; (setq cuda-keywords '("__device__" "__global__" "__shared__" "__host__" "__constant__" "#" "##" "::" "..." "<<<" ">>>" "gridDim" "blockIdx" "blockDim" "threadIdx" "warpSize" "__attribute__" "__declspec"))
+
+;; (setq cuda-keywords-regexp (regexp-opt cuda-keywords 'words))
+;; (setq cuda-type-regexp (regexp-opt cuda-types 'words))
+
+;; (setq cuda-keywords nil)
+;; (setq cuda-types nil)
+
+;; (setq cuda-font-lock-keywords
+;;   `(
+;;     (,cuda-type-regexp . font-lock-type-face)
+;;     (,cuda-keywords-regexp . font-lock-keyword-face)
+;; ))
+
 ;;;###Autoload
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . cuda-mode))
 
@@ -172,7 +195,11 @@ Key bindings:
   (run-hooks 'c-mode-common-hook)
   (run-hooks 'cuda-mode-hook)
   (setq font-lock-keywords-case-fold-search t)
+  (setq font-lock-defaults '((cuda-font-lock-keywords)))
   (c-update-modeline))
+
+  (setq mylsl-keywords-regexp nil)
+  (setq mylsl-types-regexp nil)
 
  
 (provide 'cuda-mode)
